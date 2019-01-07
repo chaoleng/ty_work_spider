@@ -6,34 +6,42 @@
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
 import pymysql
-
+import scrapy
 
 def dbHandle():
     conn = pymysql.connect(
-        host='localhost',
-        user='douban',
-        passwd='douban',
-        charset='utf8',
-        use_unicode=False
+        user="tywork",
+        password="tywork",
+        port=3306,
+        host="127.0.0.1",   #本地数据库  等同于localhost
+        db="ty_tokyo",      #数据库名
+        charset="utf8"
+
     )
     return conn
 
-class TyworkPipeline(object):
-        
+class TyworkPipeline(object):        
      def process_item(self, item, spider):
-        # dbObject = dbHandle()
-        # cursor = dbObject.cursor()
-        # job_id = item['job_id'].join
-        # job_title = scrapy.Field();
-        # job_salary = scrapy.Field();
-        # job_desc = scrapy.Field();
-        # job_type = scrapy.Field();
-        # job_position = scrapy.Field();
-        # sql = "replace into tywork.tywork(serial_number,movie_name,introduce,star,evaluate,describ) values(%s,%s,%s,%s,%s,%s)"
-        # try:
-        #      cursor.execute(sql,(item['serial_number'],item['movie_name'],item['introduce'],item['star'],item['evaluate'],item['describ']))
-        #      dbObject.commit()
-        # except Exception as e:
-        #      print (e)
-        #      dbObject.rollback()
+        dbObject = dbHandle()
+        cursor = dbObject.cursor()
+        # print(item['job_desc'])
+        job_id = item['job_id']
+        job_title = item['job_title']
+        job_salary = item['job_salary']        
+        job_desc = item['job_desc']
+        # job_type = item['job_type']
+        job_position = item['job_position']
+        print(job_position)
+        # sql = "replace into ty_tokyo.job(job_desc) values(%s)"
+        sql = "replace into ty_tokyo.job(job_id,job_title,job_salary,job_desc,job_position) values(%s,%s,%s,%s,%s)"
+        try:
+             # cursor.execute(sql,(item['job_id'],item['job_title'],item['job_salary'],item['job_desc'],item['job_type'],item['job_position']))
+             # cursor.execute(sql,(job_desc))
+             cursor.execute(sql,(job_id,job_title,job_salary,job_desc,job_position))
+             # print(item+'存储中')
+             dbObject.commit()
+        except Exception as e:
+             print (e)
+             dbObject.rollback()
         return item
+        # print(item+'存储中')

@@ -15,13 +15,13 @@ class TyworkItem(scrapy.Item):
     job_desc = scrapy.Field();
     job_type = scrapy.Field();
     job_position = scrapy.Field();
-    job_contact = scrapy.Field();
-    job_text = scrapy.Field();
+    # job_contact = scrapy.Field();
+    # job_text = scrapy.Field();
     job_href = scrapy.Field();
     job_dq = scrapy.Field();
-    job_zz = scrapy.Field();
-    job_nr = scrapy.Field();
-    job_dx = scrapy.Field();
-    job_xs = scrapy.Field();
-    job_rs = scrapy.Field();
+    # job_zz = scrapy.Field();
+    # job_nr = scrapy.Field();
+    # job_dx = scrapy.Field();
+    # job_xs = scrapy.Field();
+    # job_rs = scrapy.Field();
 
